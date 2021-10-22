@@ -11,6 +11,7 @@ ENV GCC_VERSION=10 \
     CMAKE_VERSION_FULL=3.18.2 \
     DEBIAN_FRONTEND=noninteractive
 
+# Install build dependancies
 RUN apt-get -qq update && apt -y install software-properties-common \
     && add-apt-repository ppa:ubuntu-toolchain-r/test && apt-get -qq update \
     && apt-get -qq install -y --no-install-recommends --no-install-suggests \
@@ -68,7 +69,7 @@ RUN pip3 install \
         --no-cache-dir \
         pip
 
-# Requirements
+# Python packages
 RUN pip3 install \
         --no-cache-dir \
         astropy==4.3.1 \
@@ -122,8 +123,10 @@ RUN echo '/root/spt3g_software/build/env-shell.sh' >> /root/.bashrc && \
     echo 'export SPT3G_SOFTWARE_BUILD_PATH=$SPT3G_SOFTWARE_PATH/build' >> /root/.bashrc && \
     echo 'export PATH=$SPT3G_SOFTWARE_BUILD_PATH/bin:$PATH' >> /root/.bashrc && \
     echo 'export LD_LIBRARY_PATH=$SPT3G_SOFTWARE_BUILD_PATH/bin:$LD_LIBRARY_PATH' >> /root/.bashrc && \
-    echo 'export PYTHONPATH=$SPT3G_SOFTWARE_BUILD_PATH:$PYTHONPATH' >> /root/.bashrc 
+    echo 'export PYTHONPATH=$SPT3G_SOFTWARE_BUILD_PATH:$PYTHONPATH' >> /root/.bashrc
 
+# Set SPT3G environment
 CMD /bin/bash -c "source /root/.bashrc"
 
+# Bash login shell
 ENTRYPOINT /bin/bash
