@@ -2,7 +2,7 @@ SPT3G Docker Container
 ======================
 |LICENSE| |PythonVersion| |DockerSize| |DockerVersion|
 
-Play with the `SPT3G software suit <https://github.com/SouthPoleTelescope/spt3g_software>`_ on *any* operating system within an isolated Docker container. 
+Play with the `SPT3G software suit <https://github.com/SouthPoleTelescope/spt3g_software>`_ on *any* operating system within an isolated Docker container.
 This repository was created to enable users to prototype and run `spt3g` code to a limited extent on local machines especially when access to the internet may
 be limited. This container is built on `ubuntu:20.04` with `python:3.8.10` and comes with:
 
@@ -17,9 +17,22 @@ Installation & Use
 ------------------
 Install the appropriate version of Docker for your operating system : `<https://docs.docker.com/engine/install>`_
 
-Pull a copy of the `spt3g` docker image from `hub.docker.com <https://hub.docker.com/r/achokshi/spt3g>`_ with:::
+Pull a copy of the `spt3g <https://hub.docker.com/r/achokshi/spt3g>`_ docker image from `hub.docker.com <https://hub.docker.com`_ with::
 
     docker pull achokshi/spt3g
+
+This image can be run with::
+
+    # Create a scratch directory to mount to the docker container
+    mkdir ~/spt3g-docker
+
+    # Run the container
+    docker run --rm -it \
+	-v ~/spt3g-docker:/root/spt3g-docker \
+	-p 8888:8888 -p 3141:3141 \
+	--hostname spt3g \
+	achokshi/spt3g
+
 
 
 Build Docker Image
