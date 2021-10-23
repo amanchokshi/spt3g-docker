@@ -63,6 +63,19 @@ Any notebooks or data you create will be saved in your :code:`~/spt-docker` dire
 
 Build Docker Image
 ------------------
+This docker image can also be manually build using the provieded :code:`Dockerfile`::
+
+    git clone git@github.com:amanchokshi/spt3g-docker.git
+    cd spt3g-docker
+
+    # copy or clone the spt3g_software repo here
+    git clone git@github.com:SouthPoleTelescope/spt3g_software.git
+
+    # Build the image with any tag [-t]
+    docker build . -t achokshi/spt3g
+
+    # Follow above steps to run it
+
 
 
 
