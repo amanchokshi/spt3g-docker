@@ -6,15 +6,16 @@ Play with the `SPT3G software suit <https://github.com/SouthPoleTelescope/spt3g_
 This repository was created to enable users to prototype and run `spt3g` code to a limited extent on local machines especially when access to the internet may
 be limited. This container is built on `ubuntu:20.04` with `python:3.8.10` and comes with:
 
-* Full SPT3G Software environment
+* Full SPT3G software environment
 
-* `Jupyter <https://jupyter.org/>`_ & `ipython <https://ipython.org/>`_
+* `Jupyter <https://jupyter.org/>`_ and `IPython <https://ipython.org/>`_
 
-* A local copy of the `spt3g_software <https://github.com/SouthPoleTelescope/spt3g_software>`_ documentation
+* Local copy of `spt3g_software <https://github.com/SouthPoleTelescope/spt3g_software>`_ documentation
+
 
 Installation & Use
 ------------------
-
+Install the appropriate version of Docker for your operating system : `<https://docs.docker.com/engine/install/>`_
 
 
 
