@@ -16,7 +16,7 @@ Build Docker Image
 
 
 
-.. |DockerSize| image:: https://img.shields.io/docker/image-size/achokshi/spt3g?color=%3287BC
+.. |DockerSize| image:: https://img.shields.io/docker/image-size/achokshi/spt3g?color=%233287BC
     :target: https://hub.docker.com/repository/docker/achokshi/spt3g
     :alt: Docker image size
 
