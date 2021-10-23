@@ -121,17 +121,20 @@ RUN cd spt3g_software && \
         mkdir -p /var/www/html && cp -r ./docs/* /var/www/html
 
 # Set SPT3G environment
-RUN echo '/root/spt3g_software/build/env-shell.sh' >> /root/.bashrc && \
+RUN echo 'echo "\n##############################################\n"' >> /root/.bashrc && \
+    echo '/root/spt3g_software/build/env-shell.sh' >> /root/.bashrc && \
     echo 'export SPT3G_SOFTWARE_PATH=/root/spt3g_software' >> /root/.bashrc && \
     echo 'export SPT3G_SOFTWARE_BUILD_PATH=$SPT3G_SOFTWARE_PATH/build' >> /root/.bashrc && \
     echo 'export PATH=$SPT3G_SOFTWARE_BUILD_PATH/bin:$PATH' >> /root/.bashrc && \
     echo 'export LD_LIBRARY_PATH=$SPT3G_SOFTWARE_BUILD_PATH/bin:$LD_LIBRARY_PATH' >> /root/.bashrc && \
     echo 'export PYTHONPATH=$SPT3G_SOFTWARE_BUILD_PATH:$PYTHONPATH' >> /root/.bashrc && \
     echo '/usr/sbin/nginx' >> /root/.bashrc && \
-    echo 'echo '
+    echo 'echo "SPT3G Docs Availabel at http://localhost:3141"' >> /root/.bashrc && \
+    echo 'echo "\n##############################################\n"' >> /root/.bashrc && \
+    sed -i 's/listen 80/listen 3141/g' /etc/nginx/sites-enabled/default
 
-# Expose ports: 80 - nginx docs, 8888 - jupyter
-EXPOSE 80 8888
+# Expose ports: 3141 - nginx docs, 8888 - jupyter
+EXPOSE 3141 8888
 
 # Bash login shell
 WORKDIR /root
