@@ -16,11 +16,11 @@ Build Docker Image
 
 
 
-.. |DockerSize| image:: https://img.shields.io/docker/image-size/achokshi/spt3g?color=DA3752
+.. |DockerSize| image:: https://img.shields.io/docker/image-size/achokshi/spt3g?color=5E4FA1
     :target: https://hub.docker.com/repository/docker/achokshi/spt3g
     :alt: Docker image size
 
-.. |DockerVersion| image:: https://img.shields.io/docker/v/achokshi/spt3g?color=5E4FA1
+.. |DockerVersion| image:: https://img.shields.io/docker/v/achokshi/spt3g?color=DA3752
     :target: https://hub.docker.com/repository/docker/achokshi/spt3g
     :alt: Docker image version
 
