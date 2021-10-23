@@ -19,6 +19,7 @@ RUN apt-get -qq update && apt -y install software-properties-common \
         wget \
         git \
         tini \
+        nginx \
         cmake \
         run-one \
         locales \
@@ -115,18 +116,23 @@ RUN cd spt3g_software && \
         mkdir build && \
         cd build && \
         cmake .. && \
-        make -j 4
+        make -j 4 && \
+        ./env-shell.sh make docs && \
+        mkdir -p /var/www/html && cp -r ./docs/* /var/www/html
 
-# Paths for 3G software
+# Set SPT3G environment
 RUN echo '/root/spt3g_software/build/env-shell.sh' >> /root/.bashrc && \
     echo 'export SPT3G_SOFTWARE_PATH=/root/spt3g_software' >> /root/.bashrc && \
     echo 'export SPT3G_SOFTWARE_BUILD_PATH=$SPT3G_SOFTWARE_PATH/build' >> /root/.bashrc && \
     echo 'export PATH=$SPT3G_SOFTWARE_BUILD_PATH/bin:$PATH' >> /root/.bashrc && \
     echo 'export LD_LIBRARY_PATH=$SPT3G_SOFTWARE_BUILD_PATH/bin:$LD_LIBRARY_PATH' >> /root/.bashrc && \
-    echo 'export PYTHONPATH=$SPT3G_SOFTWARE_BUILD_PATH:$PYTHONPATH' >> /root/.bashrc
+    echo 'export PYTHONPATH=$SPT3G_SOFTWARE_BUILD_PATH:$PYTHONPATH' >> /root/.bashrc && \
+    echo '/usr/sbin/nginx' >> /root/.bashrc && \
+    echo 'echo '
 
-# Set SPT3G environment
-CMD /bin/bash -c "source /root/.bashrc"
+# Expose ports: 80 - nginx docs, 8888 - jupyter
+EXPOSE 80 8888
 
 # Bash login shell
+WORKDIR /root
 ENTRYPOINT /bin/bash
