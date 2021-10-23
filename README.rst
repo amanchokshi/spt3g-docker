@@ -17,21 +17,26 @@ Installation & Use
 ------------------
 Install the appropriate version of Docker for your operating system : `<https://docs.docker.com/engine/install>`_
 
-Pull a copy of the `spt3g <https://hub.docker.com/r/achokshi/spt3g>`_ docker image from `hub.docker.com <https://hub.docker.com`_ with::
+Pull a copy of the `spt3g <https://hub.docker.com/r/achokshi/spt3g/>`_ docker image from `hub.docker.com <https://hub.docker.com>`_ with::
 
     docker pull achokshi/spt3g
 
-This image can be run with::
+Create a directory to mount to the docker container. Once mounted it will be available to your host computer and within the docker container, serving as a
+location to put data and save outputs to::
 
-    # Create a scratch directory to mount to the docker container
     mkdir ~/spt3g-docker
 
-    # Run the container
+Run the container with::
+
     docker run --rm -it \
 	-v ~/spt3g-docker:/root/spt3g-docker \
 	-p 8888:8888 -p 3141:3141 \
 	--hostname spt3g \
 	achokshi/spt3g
+
+The `-v` or `--volume` flag mounts the local `~/spt3g-docker` volume to the corresponding `/root/spt3g-docker` directory within the docker container.
+The `-p` or flag publishes the container's port(s) to the host. Port `8888` is dedicated for `Jupyter` while port `3141` is reserved to host a local copy of
+`spt3g_software` documentation.
 
 
 
