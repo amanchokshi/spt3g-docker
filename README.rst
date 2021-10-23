@@ -77,6 +77,23 @@ This docker image can also be manually build using the provieded :code:`Dockerfi
     # Follow above steps to run it
 
 
+SPT3G Tests
+^^^^^^^^^^^
+You should run tests to see that nothing broke in the build::
+
+    root@spt3g:~# cd spt3g_software/
+    root@spt3g:~/spt3g_software# cd build/
+    root@spt3g:~/spt3g_software/build# make test
+    Running tests...
+    ..
+    ..
+    100% tests passed, 0 tests failed out of 54
+
+Hooray!!
+
+
+
+
 
 
 .. |DockerSize| image:: https://img.shields.io/docker/image-size/achokshi/spt3g?color=5E4FA1
