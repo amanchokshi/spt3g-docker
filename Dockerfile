@@ -122,6 +122,7 @@ RUN cd spt3g_software && \
 
 # Set SPT3G environment
 RUN echo 'echo "\n##############################################\n"' >> /root/.bashrc && \
+    echo 'echo "Welcome to the SPT3G Docker Container"' >> /root/.bashrc && \
     echo '/root/spt3g_software/build/env-shell.sh' >> /root/.bashrc && \
     echo 'export SPT3G_SOFTWARE_PATH=/root/spt3g_software' >> /root/.bashrc && \
     echo 'export SPT3G_SOFTWARE_BUILD_PATH=$SPT3G_SOFTWARE_PATH/build' >> /root/.bashrc && \
