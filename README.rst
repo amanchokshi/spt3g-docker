@@ -2,9 +2,15 @@ SPT3G Docker Container
 ======================
 |LICENSE| |PythonVersion| |DockerSize| |DockerVersion|
 
-Play with the `SPT3G software suit <https://github.com/SouthPoleTelescope/spt3g_software>`_ on *any* operating system within an isolated 
-`Docker <https://www.docker.com/>`_ container built on `Ubuntu:20.04 <https://hub.docker.com/_/ubuntu>`_ and 
-`Python:3.8.10 <https://www.python.org/downloads/release/python-3810/>`_.
+Play with the `SPT3G software suit <https://github.com/SouthPoleTelescope/spt3g_software>`_ on *any* operating system within an isolated Docker container. 
+This repository was created to enable users to prototype and run `spt3g` code to a limited extent on local machines especially when access to the internet may
+be limited. This container is built on `ubuntu:20.04` with `python:3.8.10` and comes with:
+
+* Full SPT3G Software environment
+
+* `Jupyter <https://jupyter.org/>`_ & `ipython <https://ipython.org/>`_
+
+* A local copy of the `spt3g_software <https://github.com/SouthPoleTelescope/spt3g_software>`_ documentation
 
 Installation & Use
 ------------------
