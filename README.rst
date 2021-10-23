@@ -17,12 +17,9 @@ Installation & Use
 ------------------
 Install the appropriate version of Docker for your operating system : `<https://docs.docker.com/engine/install>`_
 
-Pull a copy of the `spt3g` docker image from `hub.docker.com <https://hub.docker.com/r/achokshi/spt3g>`_ with :
+Pull a copy of the `spt3g` docker image from `hub.docker.com <https://hub.docker.com/r/achokshi/spt3g>`_ with:::
 
-```
 docker pull achokshi/spt3g
-
-```
 
 
 Build Docker Image
