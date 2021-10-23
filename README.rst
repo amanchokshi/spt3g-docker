@@ -15,8 +15,13 @@ be limited. This container is built on `ubuntu:20.04` with `python:3.8.10` and c
 
 Installation & Use
 ------------------
-Install the appropriate version of Docker for your operating system : `<https://docs.docker.com/engine/install/>`_
+Install the appropriate version of Docker for your operating system : `<https://docs.docker.com/engine/install>`_
 
+Pull a copy of the `spt3g` docker image from `hub.docker.com <https://hub.docker.com/r/achokshi/spt3g>`_ with :
+
+```
+docker pull achokshi/spt3g
+```
 
 
 Build Docker Image
