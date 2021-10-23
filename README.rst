@@ -34,9 +34,9 @@ Run the container with::
 	--hostname spt3g \
 	achokshi/spt3g
 
-The :code:`-v` or `--volume` flag mounts the local `~/spt3g-docker` volume to the corresponding `/root/spt3g-docker` directory within the docker container.
-The `-p` or flag publishes the container's port(s) to the host. Port `8888` is dedicated for `Jupyter` while port `3141` is reserved to host a local copy of
-`spt3g_software` documentation.
+The :code:`-v` or :code:`--volume` flag mounts the local :code:`~/spt3g-docker` volume to the corresponding :code:`/root/spt3g-docker` directory within the 
+docker container. The :code:`-p` or flag publishes the container's port(s) to the host. Port :code:`8888` is dedicated for :code:`Jupyter` while port 
+:code:`3141` is reserved to host a local copy of :code:`spt3g_software` documentation.
 
 
 
