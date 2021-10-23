@@ -19,7 +19,7 @@ Install the appropriate version of Docker for your operating system : `<https://
 
 Pull a copy of the `spt3g` docker image from `hub.docker.com <https://hub.docker.com/r/achokshi/spt3g>`_ with:::
 
-docker pull achokshi/spt3g
+    docker pull achokshi/spt3g
 
 
 Build Docker Image
