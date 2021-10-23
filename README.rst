@@ -1,6 +1,6 @@
 SPT3G Docker Container
 ======================
-|DockerSize| |DockerVersion|
+|PythonVersion| |DockerSize| |DockerVersion|
 
 Run the SPT3G software suit in an `Docker <https://www.docker.com/>`_ container.
 
@@ -23,3 +23,7 @@ Build Docker Image
 .. |DockerVersion| image:: https://img.shields.io/docker/v/achokshi/spt3g?color=%2366C1A4
     :target: https://hub.docker.com/repository/docker/achokshi/spt3g
     :alt: Docker image version
+
+.. |PythonVersion| image:: https://img.shields.io/badge/Python-3.8.10-3282b8?logo=python&logoColor=white&color=5E4FA1
+    :target: https://www.python.org/downloads/release/python-3810/
+    :alt: Python version
