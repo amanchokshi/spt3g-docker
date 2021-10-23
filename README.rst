@@ -37,7 +37,7 @@ Run the container with::
 The :code:`-v --volume` flag mounts the local :code:`~/spt3g-docker` volume to the corresponding :code:`/root/spt3g-docker` directory within the
 docker container. The :code:`-p` or flag publishes the container's port(s) to the host. Port :code:`8888` is dedicated for :code:`Jupyter` while port
 :code:`3141` is reserved to host a local copy of :code:`spt3g_software` documentation. :code:`achokshi/spt3g` is the tag of the docker image which we pulled in
- previous steps. If the image runs succesfully you will see::
+previous steps. If the image runs succesfully you will see::
 
     ##############################################
 
