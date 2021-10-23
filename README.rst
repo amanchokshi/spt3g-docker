@@ -34,7 +34,7 @@ Run the container with::
 	--hostname spt3g \
 	achokshi/spt3g
 
-The :code:`-v --volume` flag mounts the local :code:`~/spt3g-docker` volume to the corresponding :code:`/root/spt3g-docker` directory within the
+The :code:`--rm` flag shuts down and cleans up the running container once you're done, while the :code:`-it` flag provides an interactive terminal. The :code:`-v --volume` flag mounts the local :code:`~/spt3g-docker` volume to the corresponding :code:`/root/spt3g-docker` directory within the
 docker container. The :code:`-p` or flag publishes the container's port(s) to the host. Port :code:`8888` is dedicated for :code:`Jupyter` while port
 :code:`3141` is reserved to host a local copy of :code:`spt3g_software` documentation. :code:`achokshi/spt3g` is the tag of the docker image which we pulled in
 previous steps. If the image runs succesfully you will see::
@@ -49,7 +49,17 @@ previous steps. If the image runs succesfully you will see::
 
     root@spt3g:~#
 
-This
+Files which you put within :code:`~/spt3g-docker` will now be available to you. A local version of the documentation is available at `<http://localhost:3141>`_
+once the above commands have been succesfully executed.
+
+
+Jupyter
+^^^^^^^
+Jupyter notebooks are a common tool for interactive data analysis and can be run from this container with::
+
+    jupyter-lab --port=8888 --no-browser --ip=0.0.0.0 --allow-root
+
+Any notebooks or data you create will be saved in your :code:`~/spt-docker` directory and be available after the container is shutdown.
 
 Build Docker Image
 ------------------
