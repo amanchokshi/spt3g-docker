@@ -12,57 +12,108 @@ ENV GCC_VERSION=10 \
     DEBIAN_FRONTEND=noninteractive
 
 # Install build dependancies
-RUN apt-get -qq update && apt -y install software-properties-common \
-    && add-apt-repository ppa:ubuntu-toolchain-r/test && apt-get -qq update \
+# RUN apt-get -qq update && apt -y install software-properties-common \
+#     && add-apt-repository ppa:ubuntu-toolchain-r/test && apt-get -qq update \
+#     && apt-get -qq install -y --no-install-recommends --no-install-suggests \
+#         binutils \
+#         wget \
+#         curl \
+#         git \
+#         tini \
+#         nginx \
+#         cmake \
+#         run-one \
+#         locales \
+#         libc6-dev \
+#         g++-${GCC_VERSION} \
+#         libgmp-dev \
+#         libmpfr-dev \
+#         libmpc-dev \
+#         gfortran-8 \
+#         libffi-dev \
+#         libssl-dev \
+#         pkg-config \
+#         subversion \
+#         zlib1g-dev \
+#         libbz2-dev \
+#         libsqlite3-dev \
+#         libreadline-dev \
+#         libhdf5-dev \
+#         python3-pip \
+#         libgsl0-dev \
+#         libflac-dev \
+#         libfftw3-dev \
+#         libnetcdf-dev \
+#         build-essential \
+#         libboost-all-dev \
+#         libgdbm-dev \
+#         libnss3-dev \
+#         xz-utils \
+#         libncurses5-dev \
+#         libncursesw5-dev \
+#         liblzma-dev \
+#         fonts-liberation \
+#         ca-certificates \
+#         autoconf-archive \
+#     && ln -s /usr/bin/gfortran-8 /usr/bin/gfortran \
+#     && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-${GCC_VERSION} 100 \
+#     && update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-${GCC_VERSION} 100 \
+#     && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${GCC_VERSION} 100 \
+#     && update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-${GCC_VERSION} 100 \
+#     && ln -s /usr/include/locale.h /usr/include/xlocale.h \
+#     && rm -rf /var/lib/apt/lists/* && ln -s /usr/bin/python3.8 /usr/bin/python \
+#     && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
+#     && locale-gen
+
+# RUN apt-get -qq update && apt -y install software-properties-common \
+    # && add-apt-repository ppa:ubuntu-toolchain-r/test && apt-get -qq update \
+RUN apt-get update \
     && apt-get -qq install -y --no-install-recommends --no-install-suggests \
-        binutils \
-        wget \
-        git \
-        tini \
-        nginx \
-        cmake \
-        run-one \
-        locales \
-        libc6-dev \
-        g++-${GCC_VERSION} \
-        libgmp-dev \
-        libmpfr-dev \
-        libmpc-dev \
-        gfortran-8 \
-        libffi-dev \
-        libssl-dev \
-        pkg-config \
-        subversion \
-        zlib1g-dev \
-        libbz2-dev \
-        libsqlite3-dev \
-        libreadline-dev \
-        libhdf5-dev \
-        python3-pip \
-        libgsl0-dev \
-        libflac-dev \
-        libfftw3-dev \
-        libnetcdf-dev \
         build-essential \
-        libboost-all-dev \
-        libgdbm-dev \
-        libnss3-dev \
-        xz-utils \
+        ca-certificates \
+        cmake \
+        curl \
+        g++-8 \
+        gcc-8 \
+        gfortran-8 \
+        git \
+        locales \
+        libbz2-dev \
+        libffi-dev \
+        libfftw3-dev \
+        libgsl-dev \
+        liblzma-dev \
         libncurses5-dev \
         libncursesw5-dev \
-        liblzma-dev \
-        fonts-liberation \
-        ca-certificates \
-        autoconf-archive \
+        libreadline-dev \
+        libsqlite3-dev \
+        libssl-dev \
+        libboost-all-dev \
+        libflac-dev \
+        libnetcdf-dev \
+        wget \
+        xz-utils \
+        zlib1g-dev \
     && ln -s /usr/bin/gfortran-8 /usr/bin/gfortran \
-    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-${GCC_VERSION} 100 \
-    && update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-${GCC_VERSION} 100 \
-    && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${GCC_VERSION} 100 \
-    && update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-${GCC_VERSION} 100 \
     && ln -s /usr/include/locale.h /usr/include/xlocale.h \
-    && rm -rf /var/lib/apt/lists/* && ln -s /usr/bin/python3.8 /usr/bin/python \
     && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
-    && locale-gen
+    && locale-gen \
+    && rm -rf /var/lib/apt/lists/*
+
+
+## setup unprivileged user
+ENV USER spt3g
+ENV SPT3G_HOME=/home/$USER
+RUN adduser --disabled-password --gecos ${USER} --uid 1000 $USER
+USER $USER
+
+# dynamically linked python
+RUN curl https://pyenv.run | bash
+ENV PYENV_ROOT $SPT3G_HOME/.pyenv
+ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
+RUN PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.8.3
+RUN pyenv global 3.8.3
+
 
 # Upgrade pip
 RUN pip3 install \
@@ -110,33 +161,35 @@ RUN pip3 install \
         xhtml2pdf==0.2.5
 
 # Install SPT3G
-WORKDIR /root
-COPY ./spt3g_software spt3g_software
+WORKDIR $SPT3G_HOME
+COPY --chown=1000 ./spt3g_software spt3g_software
 RUN cd spt3g_software && \
         mkdir build && \
         cd build && \
         cmake .. && \
         make -j 4 && \
         ./env-shell.sh make docs && \
-        mkdir -p /var/www/html && cp -r ./docs/* /var/www/html
+        chown 1000:1000 /var/www && \
+        mkdir -p /var/www/html && \
+        cp -r ./docs/* /var/www/html
 
 # Set SPT3G environment
-RUN echo 'echo "\n##############################################\n"' >> /root/.bashrc && \
-    echo 'echo "Welcome to the SPT3G Docker Container"' >> /root/.bashrc && \
-    echo '/root/spt3g_software/build/env-shell.sh' >> /root/.bashrc && \
-    echo 'export SPT3G_SOFTWARE_PATH=/root/spt3g_software' >> /root/.bashrc && \
-    echo 'export SPT3G_SOFTWARE_BUILD_PATH=$SPT3G_SOFTWARE_PATH/build' >> /root/.bashrc && \
-    echo 'export PATH=$SPT3G_SOFTWARE_BUILD_PATH/bin:$PATH' >> /root/.bashrc && \
-    echo 'export LD_LIBRARY_PATH=$SPT3G_SOFTWARE_BUILD_PATH/bin:$LD_LIBRARY_PATH' >> /root/.bashrc && \
-    echo 'export PYTHONPATH=$SPT3G_SOFTWARE_BUILD_PATH:$PYTHONPATH' >> /root/.bashrc && \
-    echo '/usr/sbin/nginx' >> /root/.bashrc && \
-    echo 'echo "SPT3G Docs Availabel at http://localhost:3141"' >> /root/.bashrc && \
-    echo 'echo "\n##############################################\n"' >> /root/.bashrc && \
-    sed -i 's/listen 80/listen 3141/g' /etc/nginx/sites-enabled/default
+RUN echo 'echo "\n##############################################\n"' >> $SPT3G_HOME/.bashrc && \
+    echo 'echo "Welcome to the SPT3G Docker Container"' >> $SPT3G_HOME/.bashrc && \
+    echo '/root/spt3g_software/build/env-shell.sh' >> $SPT3G_HOME/.bashrc && \
+    echo 'export SPT3G_SOFTWARE_PATH=/root/spt3g_software' >> $SPT3G_HOME/.bashrc && \
+    echo 'export SPT3G_SOFTWARE_BUILD_PATH=$SPT3G_SOFTWARE_PATH/build' >> $SPT3G_HOME/.bashrc && \
+    echo 'export PATH=$SPT3G_SOFTWARE_BUILD_PATH/bin:$PATH' >> $SPT3G_HOME/.bashrc && \
+    echo 'export LD_LIBRARY_PATH=$SPT3G_SOFTWARE_BUILD_PATH/bin:$LD_LIBRARY_PATH' >> $SPT3G_HOME/.bashrc && \
+    echo 'export PYTHONPATH=$SPT3G_SOFTWARE_BUILD_PATH:$PYTHONPATH' >> $SPT3G_HOME/.bashrc && \
+    echo '/usr/sbin/nginx' >> $SPT3G_HOME/.bashrc && \
+    echo 'echo "SPT3G Docs Availabel at http://localhost:3141"' >> $SPT3G_HOME/.bashrc && \
+    echo 'echo "\n##############################################\n"' >> $SPT3G_HOME/.bashrc && \
+    chown 1000:1000 /etc/nginx/sites-enabled/default && sed -i 's/listen 80/listen 3141/g' /etc/nginx/sites-enabled/default
 
 # Expose ports: 3141 - nginx docs, 8888 - jupyter
 EXPOSE 3141 8888
 
 # Bash login shell
-WORKDIR /root
+WORKDIR $SPT3G_HOME
 ENTRYPOINT /bin/bash
